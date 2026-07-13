@@ -26,9 +26,15 @@ class AppController extends ChangeNotifier {
   }
 
   int get todayTotalMl => today.totalMl;
-  double get progress =>
-      (_settings.dailyGoalMl == 0 ? 0 : todayTotalMl / _settings.dailyGoalMl)
-          .clamp(0.0, 1.0);
+  double get progress {
+    if (_settings.dailyGoalMl == 0) {
+      return 0.0;
+    }
+
+    final value = todayTotalMl / _settings.dailyGoalMl;
+
+    return value.clamp(0.0, 1.0).toDouble();
+  }
 
   int get currentStreak {
     var streak = 0;
